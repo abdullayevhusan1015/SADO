@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink-950 text-paper font-sans antialiased;
+  }
+
+  /* Visible focus for keyboard users — this is an accessibility tool, so it stays loud. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-400 ring-offset-2 ring-offset-ink-950;
+  }
+
+  ::selection {
+    @apply bg-brand-500/40 text-paper;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .pill {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition;
+  }
+
+  .pill-primary {
+    @apply pill bg-brand-500 text-white hover:bg-brand-400 active:bg-brand-600;
+  }
+
+  .pill-ghost {
+    @apply pill border border-line bg-ink-850/70 text-paper hover:border-brand-500 hover:bg-ink-800;
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-ink-900/80 p-6;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.22em] text-brand-300;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

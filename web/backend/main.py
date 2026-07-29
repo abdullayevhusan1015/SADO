@@ -23,6 +23,14 @@ ALLOWED_ORIGINS = [
     if origin.strip()
 ]
 
+# Vercel mints a new hostname for every preview deployment, so an exact-match
+# allowlist blocks every build except the production alias. This endpoint takes
+# no credentials and returns only a letter prediction, so matching the project's
+# own preview hosts is a reasonable trade for being able to test them.
+ALLOWED_ORIGIN_REGEX = os.getenv(
+    "SADO_CORS_ORIGIN_REGEX", r"https://sado-[A-Za-z0-9-]+\.vercel\.app"
+)
+
 HAND_NUM = 21
 FEATURE_COUNT = HAND_NUM * 3
 FEATURE_NAMES = [f"{axis}{i}" for i in range(HAND_NUM) for axis in ("x", "y", "z")]
@@ -53,6 +61,7 @@ app = FastAPI(title="SADO API", version="0.1.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=ALLOWED_ORIGIN_REGEX,
     allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
